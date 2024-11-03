@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:booking_bus/views/home_page.dart';
+import 'views/home_page.dart';
+import 'views/profile_page.dart';
+import 'views/spash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,11 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Arrowspeed - Bus Booking',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      home: HomePage(), // Halaman utama
+      debugShowCheckedModeBanner: false,
+      title: 'Bus Booking App',
+      home: SplashScreen(), // Ganti HomePage dengan SplashScreen
+      routes: {
+        '/profile': (context) => ProfilePage(), // Routing ke halaman profil
+      },
     );
   }
 }

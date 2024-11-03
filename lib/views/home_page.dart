@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,38 +25,48 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: _buildAppBar(),
-      body: _buildBody(),
-      bottomNavigationBar: _buildCustomBottomNavigationBar(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Color(0xFFEFEFEF), // Soft gray background
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: _buildAnimatedBottomNavigationBar(),
+      ),
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.teal[800],
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      elevation: 1,
+      backgroundColor: Colors.white,
+      title: Row(
         children: [
-          Text('Hallo! Angga',
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
-          Text(
-            'Book your bus!',
-            style: TextStyle(fontSize: 12, color: Colors.greenAccent),
+          Icon(FeatherIcons.mapPin, color: Color(0xFF4A4A4A)),
+          SizedBox(width: 8),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hello, Angga',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF2E384D),
+                ),
+              ),
+              Text(
+                'Plan Your Trip',
+                style: TextStyle(fontSize: 14, color: Color(0xFF4A4A4A)),
+              ),
+            ],
           ),
         ],
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.notifications, color: Colors.white),
-          onPressed: () {
-            // Notification logic
-          },
+          icon: Icon(FeatherIcons.bell, color: Color(0xFF4A4A4A)),
+          onPressed: () {},
         ),
       ],
     );
@@ -64,14 +75,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSearchForm(),
-            SizedBox(height: 24),
+            SizedBox(height: 20),
             _buildSection('Popular Routes', _buildHorizontalList()),
-            SizedBox(height: 24),
+            SizedBox(height: 20),
             _buildSection('Recent Searches', _buildHorizontalList()),
           ],
         ),
@@ -80,51 +91,52 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildSearchForm() {
-    return Center(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12.withOpacity(0.1),
-              blurRadius: 20,
-              offset: Offset(0, 10),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            _buildTextField(
-                hintText: 'From', icon: Icons.directions_bus_filled),
-            SizedBox(height: 20),
-            _buildTextField(hintText: 'To', icon: Icons.directions_bus_filled),
-            SizedBox(height: 20),
-            _buildTextField(hintText: 'Date', icon: Icons.calendar_today),
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                // Search bus logic
-              },
-              child: Text(
-                'Search Bus',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.teal[800],
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: Offset(0, 4),
+            blurRadius: 8,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          _buildTextField(hintText: 'From', icon: FeatherIcons.mapPin),
+          SizedBox(height: 15),
+          _buildTextField(hintText: 'To', icon: FeatherIcons.mapPin),
+          SizedBox(height: 15),
+          _buildTextField(hintText: 'Date', icon: FeatherIcons.calendar),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {},
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(FeatherIcons.search, color: Colors.white),
+                SizedBox(width: 8),
+                Text(
+                  'Find Buses',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF007BFF), // Primary color
+              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 3,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -132,12 +144,12 @@ class _HomePageState extends State<HomePage> {
   Widget _buildTextField({required String hintText, required IconData icon}) {
     return TextField(
       decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.teal[800]),
+        prefixIcon: Icon(icon, color: Color(0xFF007BFF)),
         hintText: hintText,
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: Colors.white,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
@@ -152,11 +164,12 @@ class _HomePageState extends State<HomePage> {
         Text(
           title,
           style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF2E384D),
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 10),
         content,
       ],
     );
@@ -164,7 +177,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildHorizontalList() {
     return Container(
-      height: 180,
+      height: 160,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: routes.length,
@@ -177,17 +190,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildRouteCard(RouteInfo route) {
-    return Container(
-      width: 200,
-      margin: EdgeInsets.symmetric(horizontal: 10),
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      width: 180,
+      margin: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, 8),
+            color: Colors.black.withOpacity(0.1),
+            offset: Offset(0, 4),
+            blurRadius: 8,
           ),
         ],
       ),
@@ -196,11 +210,15 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
               child: Image.network(
                 'https://via.placeholder.com/200',
-                width: double.infinity,
                 fit: BoxFit.cover,
+                width: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset('assets/placeholder.png',
+                      fit: BoxFit.cover);
+                },
               ),
             ),
           ),
@@ -209,12 +227,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${route.from} → ${route.to}',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Row(
+                  children: [
+                    Icon(FeatherIcons.mapPin,
+                        size: 14, color: Color(0xFF007BFF)),
+                    SizedBox(width: 4),
+                    Text('${route.from} → ${route.to}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15)),
+                  ],
+                ),
                 SizedBox(height: 4),
                 Text('Harga ${route.price}',
-                    style: TextStyle(color: Colors.grey[600])),
+                    style: TextStyle(color: Color(0xFF4A4A4A))),
               ],
             ),
           ),
@@ -223,63 +248,90 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCustomBottomNavigationBar() {
+  Widget _buildAnimatedBottomNavigationBar() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 8), // Padding for top and bottom
       decoration: BoxDecoration(
-        color: Colors.teal[800],
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black26,
+            color: Colors.black.withOpacity(0.1),
             blurRadius: 10,
-            offset: Offset(0, -5),
+            offset: Offset(0, -4),
           ),
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.home, 'Home', 0),
-          _buildNavItem(Icons.receipt_long, '', 1),
-          _buildNavItem(Icons.person, '', 2),
+          _buildNavItem(0, FeatherIcons.home, 'Home'),
+          _buildNavItem(1, FeatherIcons.fileText, 'Tickets'),
+          _buildNavItem(2, FeatherIcons.user, 'Profile'),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
-    bool isSelected = _selectedIndex == index;
-
-    return InkWell(
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final isSelected = _selectedIndex == index;
+    return GestureDetector(
       onTap: () => _onItemTapped(index),
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: EdgeInsets.symmetric(
-            vertical: 10, horizontal: isSelected ? 20 : 16),
-        child: Row(
-          children: [
-            Icon(icon,
-                color: isSelected ? Colors.teal[800] : Colors.white, size: 28),
-            if (isSelected)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    color: Colors.teal[800],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: Icon(
+              icon,
+              color: isSelected ? Color(0xFF007BFF) : Color(0xFF4A4A4A),
+              size: isSelected ? 30 : 24, // Increase icon size when selected
+            ),
+          ),
+          SizedBox(height: 4),
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 300),
+            opacity:
+                isSelected ? 1.0 : 0.7, // Change opacity based on selection
+            child: Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? Color(0xFF007BFF) : Color(0xFF4A4A4A),
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
+    );
+  }
+
+  // Fungsi untuk transisi ke halaman berikutnya
+  void navigateToHome(BuildContext context) {
+    Navigator.of(context).push(_createRoute());
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0); // Mulai dari bawah
+        const end = Offset.zero; // Berhenti di posisi akhir
+        const curve = Curves.easeInOut; // Kurva transisi
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(
+          position: offsetAnimation,
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 500), // Durasi transisi
     );
   }
 }
